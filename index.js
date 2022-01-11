@@ -18,11 +18,12 @@ MongoClient.connect(
   {
     // pass in options for accessing the db
     // only 50 people can access at one time
-    poolSize: 50,
+    // pool size is not supported at parse options
+    // poolSize: 50,
     // after 2500ms request will timeout
-    wtimeout: 2500,
-    // 
-    useNewUrlParse: true 
+    wtimeoutMS: 2500,
+    // This is causing error with starting server
+    // useNewUrlParse: true 
   }
   )
   .catch(err => {
