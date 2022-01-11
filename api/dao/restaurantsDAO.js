@@ -41,6 +41,9 @@ export default class RestaurantsDAO {
       // search by name
       if('name' in filters) {
         // $text - mongodb text search
+        // search text for anything with that name
+        // need to set up in mongodb which will search for name not in db field.
+        // which fields from db will be searched for specific string
         query = { $text: { $search: filters['name']}}
         // search by cuisine
       } else if ('cuisine' in filters) {
@@ -50,6 +53,7 @@ export default class RestaurantsDAO {
         query = {'cuisine': { $eq: filters['cuisine']}}
         // search by zipcode
       } else if ('zipcode' in filters) {
+        // address.zipcode - db field
         query = {'address.zipcode': { $eq: filters['zipcode']}}
       }
     }
@@ -57,24 +61,33 @@ export default class RestaurantsDAO {
     let cursor
 
     try {
+      // find all restaurants from db that match query passed in
+      // if blank query, will return all restaurants
       cursor = await restaurants
         .find(query)
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`)
+      // if error, return empty list and return 0
       return { restaurantsList: [], totalNumRestaurants: 0 }
     }
 
+    // if no error, limit result to restaurantsPerPage(20)
+    // to get page number - skip to get specific page of results
     const displayCursor = cursor.limit(restaurantsPerPage).skip(restaurantsPerPage * page)
 
+
     try {
+      // set restaurantsList to an array
       const restaurantsList = await displayCursor.toArray()
       const totalNumRestaurants = await restaurants.countDocuments(query)
 
+      // return the array
       return { restaurantsList, totalNumRestaurants }
     } catch (e) {
       console.error(
         `Unable to convert cursor to array or problem counting documents, ${e}`,
       )
+      // if error return this
       return { restaurantsList: [], totalNumRestaurants: 0}
     }
   }
