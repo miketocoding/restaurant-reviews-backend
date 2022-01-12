@@ -63,7 +63,7 @@ export default class ReviewsController {
   static async apiDeleteReview(req, res, next) {
     try{
       // query param
-      const reviewId = req.quary._id
+      const reviewId = req.query.id
       // get user id in body. Non standard to get things from body
       const userId = req.body.user_id
       console.log(reviewId)
