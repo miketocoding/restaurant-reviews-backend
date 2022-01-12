@@ -16,7 +16,10 @@ export default class RestaurantsDAO {
     // collection - 'restaurants'
     try {
       // specifically getting restaurants and not neighborhoods from sample data
+      // console.log("I have injectDB")
+      // console.log({restaurants})
       restaurants = await conn.db(process.env.RESTREVIEWS_NS).collection("restaurants")
+      // console.log({restaurants})
       // if can't get it send error to console
     } catch (e) {
       console.error(

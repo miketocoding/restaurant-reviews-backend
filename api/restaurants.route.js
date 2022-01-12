@@ -1,6 +1,7 @@
 import express from 'express'
 // create controller route file will use
 import RestaurantsCtrl from './restaurants.controller.js'
+import ReviewsCtrl from './reviews.controller.js'
 
 // get access to express router, this is a route file
 const router = express.Router()
@@ -11,5 +12,11 @@ const router = express.Router()
 // restaurantsctrl - file
 // apiGetRestaurants - method
 router.route('/').get(RestaurantsCtrl.apiGetRestaurants)
+
+router
+  .route('/review')
+  .post(ReviewsCtrl.apiPostReview)
+  .put(ReviewsCtrl.apiUpdateReview)
+  .delete(ReviewsCtrl.apiDeleteReview)
 
 export default router

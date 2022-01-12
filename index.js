@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 
 // import
 import RestaurantsDAO from './dao/restaurantsDAO.js'
+import ReviewsDAO from './dao/reviewsDAO.js'
 
 // now configure dotenv
 dotenv.config()
@@ -38,6 +39,7 @@ MongoClient.connect(
     // after we've connected to db and before we start server
     // how we get initial reference to restaurants collection in db
     await RestaurantsDAO.injectDB(client)
+    await ReviewsDAO.injectDB(client)
     // how we start app server after db connected
     app.listen(port, () => {
       console.log(`listening on port ${port}`)
